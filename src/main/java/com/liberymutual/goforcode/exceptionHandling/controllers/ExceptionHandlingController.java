@@ -50,21 +50,33 @@ public class ExceptionHandlingController {
     @PostMapping("/handleInteger")
     public ModelAndView handleInteger(String probablyAnInteger) {
         ModelAndView mv = new ModelAndView("exceptionHandling/default");
-        mv.addObject("integerResult", Integer.parseInt(probablyAnInteger));
+        try {
+        	mv.addObject("integerResult", Integer.parseInt(probablyAnInteger));
+        } catch(java.lang.IllegalArgumentException iae) {
+        	mv.addObject("integerResult", "not an integer");
+        }
         return mv;
     }
 
     @PostMapping("/handleDecimal")
     public ModelAndView handleDecimal(String probablyADecimal) {
         ModelAndView mv = new ModelAndView("exceptionHandling/default");
-        mv.addObject("decimalResult", Double.parseDouble(probablyADecimal));
+        try {
+        	mv.addObject("decimalResult", Double.parseDouble(probablyADecimal));
+        } catch(java.lang.IllegalArgumentException iae) {
+        	mv.addObject("decimalResult", "not a decimal");
+        }
         return mv;
     }
 
     @PostMapping("/handleDate")
     public ModelAndView handleDate(String probablyADate) {
         ModelAndView mv = new ModelAndView("exceptionHandling/default");
-        mv.addObject("dateResult", LocalDate.parse(probablyADate));
+        try {
+        	mv.addObject("dateResult", LocalDate.parse(probablyADate));
+        } catch(java.time.format.DateTimeParseException dte) {
+        	mv.addObject("dateResult", "not a date");
+        }
         return mv;
     }
 
